@@ -7,7 +7,7 @@ global $confirmationCode;
 global $language, $validLanguages;
 global $zone, $redirurl;
 
-$brand="ShipExpert";
+$brand="Free Internet";
 $language='en';
 $lang='en';
 $build="v1" ;
