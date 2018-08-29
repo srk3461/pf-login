@@ -27,76 +27,6 @@ if (!empty($lines[3]))
 	$macAddress = $lines[3]; // Works on FreeBSD
 else
 	$macAddress = "fa:ke:ma:c:ad:dr"; // Fake MAC on dev station which is probably not FreeBSD
-
-  // Clean input function
-  function cleanInput($input) {
-  	$search = array(
-  	'@<script[^>]*?>.*?</script>@si',   /* strip out javascript */
-  	'@<[\/\!]*?[^<>]*?>@si',            /* strip out HTML tags */
-  	'@<style[^>]*?>.*?</style>@siU',    /* strip style tags properly */
-  	'@<![\s\S]*?--[ \t\n\r]*>@'         /* strip multi-line comments */
-  	);
-
-  	$output = preg_replace($search, '', $input);
-  	return $output;
-  }
-
-  function slog($string) {
-  	print "<p style=color:red>Value: $string</p>";
-  }
-
-  // Credit to http://stackoverflow.com/a/4356295/2635443
-  function generateRandomString($length = 10) {
-      $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      $charactersLength = strlen($characters);
-      $randomString = '';
-      for ($i = 0; $i < $length; $i++) {
-          $randomString .= $characters[rand(0, $charactersLength - 1)];
-      }
-      return $randomString;
-  }
-
-  function dbError($db, $errMessage) {
-  	trigger_error($errMessage . utf8_encode($db->error));
-
-  	if (DEBUG == true)
-  		WelcomePage($errMessage . utf8_encode($db->error));
-  	else
-  		WelcomePage($errMessage);
-  	$db->close();
-  	die();
-  }
-
-  if(isset($_GET['language']))
-  	$language = cleanInput($_GET["language"]);
-  if (!in_array($language, $validLanguages))
-  	$language="en";
-
-  // pfSense 2.3 fix, see https://forum.pfsense.org/index.php?topic=105567.0
-  if(isset($_GET['zone']))
-  	$zone = cleanInput($_GET["zone"]);
-
-  if(isset($_GET['redirurl']))
-  	$redirurl = cleanInput($_GET["redirurl"]);
-
-    if (isset($_POST["emailAddress"]))
-    	$emailAddress = cleanInput($_POST["emailAddress"]);
-    else
-    	$emailAddress = false;
-    if ((!filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) && ($askForEmailAddress == true))
-    {
-    	$checkMessage = t('incorrectInput_string');
-    	$badCheck = true;
-    }
-
-    if(((isset($_POST["termsOfUse"])) || ($askForTermsOfUse == false)) && isset($_POST["connect"]))
-    {
-    	$regDate = date("Y-m-d H:i:s");
-    	if (isset($_POST["newsletter"]))
-    		$newsletter = 1;
-    	else
-    		$newsletter = 0;
-      }
 ?>
 <!DOCTYPE html>
 <!--<?php echo $build . "\n"; ?>-->
@@ -297,8 +227,8 @@ else
           }
 
       </style>
-      <script type="text/javascript" src="captiveportal-jquery-1.11.3.min.js"></script>
-      <script type="text/javascript" src="captiveportal-bootstrap.min.js"></script>
+    <!--  <script type="text/javascript" src="captiveportal-jquery-1.11.3.min.js"></script>
+      <script type="text/javascript" src="captiveportal-bootstrap.min.js"></script> -->
   </head>
   <body>
   <!-- Terms Of Use Modal -->
